@@ -7,10 +7,21 @@ var router = express.Router();
 
 var db = require("../models")
 
+
+function clearData() {
+    db.Opening.deleteMany({}, function (err) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log("that worked, everything got dropped first.")
+        }
+    })
+}
 // Let's add some routes here. 
 
 // The homepage should also be the page where we scrape, so that everytime you visit the homepage, more openings are being scraped. 
 router.get("/scrape", function (req, res) {
+    clearData();
     // First, we grab the body of the html with axios
     axios.get("http://www.chess.com/openings").then(function (response) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
@@ -18,7 +29,6 @@ router.get("/scrape", function (req, res) {
 
         // Now, we grab every h2 within an article tag, and do the following:
         $(".openings-game-block").each(function (i, element) {
-
             //    Here's the title. Need to find a lower class first. 
             var title = $(element).find(".openings-game-name").text().trim();
             console.log("Here's the name of the opening: " + title)
@@ -29,32 +39,18 @@ router.get("/scrape", function (req, res) {
             var image = $(element).find(".openings-image").attr("src").trim();
             console.log("Here's the image URL: " + image)
 
-            db.Opening.deleteMany({}, function (err) {
-                if (err) {
-                    console.log(err)
-                } else {
-                    console.log("that worked, everything got dropped first.")
-                }
-            })
-
             db.Opening.create({
                 "title": title,
                 "link": link,
                 "image": image
-            }).then(function (data) {
-                res.json(data)
-            }).catch(function (error) {
-                res.json(error)
-            })
+            });
         });
-
         // Send a message to the client
         res.send("Scrape Complete");
     });
 });
 
-module.exports = router
-
+module.exports = router, clearData;
 
 // // Route for getting all Articles from the db
 // app.get("/articles", function (req, res) {
