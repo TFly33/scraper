@@ -11,7 +11,6 @@ var OpeningSchema = new Schema({
     title: {
         type: String,
         required: true,
-        unique: true
     },
     // `link` is required and of type String
     link: {
@@ -19,10 +18,13 @@ var OpeningSchema = new Schema({
         required: true,
         unique: true
     },
-    image:{
-    type: String,
-    required:true,
-    unique: true
+    image: {
+        type: String,
+    },
+    saved: {
+        default: false,
+        type: Boolean,
+        require: true
     },
     // The ref property links the ObjectId to the Note model
     // This allows us to populate the Article with an associated Note

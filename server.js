@@ -2,9 +2,6 @@
 var express = require("express");
 var logger = require("morgan");
 var mongoose = require("mongoose");
-var router = express.Router();
-// var axios = require("axios");
-// var cheerio = require("cheerio");
 
 var PORT = 3000;
 
@@ -21,9 +18,9 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 
-var router = require("./controllers/openingsController");
+var routes = require("./controllers/openingsController");
 
-app.use(router);
+app.use(routes);
 
 // Set Handlebars.
 var exphbs = require("express-handlebars");
@@ -32,7 +29,7 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/openings", { useNewUrlParser: true });
+mongoose.connect("mongodb://localhost/openings", { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Start the server
 app.listen(PORT, function() {

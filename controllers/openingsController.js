@@ -1,28 +1,16 @@
 var express = require("express");
 var axios = require("axios");
 var cheerio = require("cheerio");
-var mongojs = require("mongojs");
 // Not sure if I'll actually need this one here. 
 var router = express.Router();
 // Import the model for notes and articles 
-// CREAT THIS LATER 
-// var Note = require("..Note");
-var Opening = require("../models/Opening.js");
-// Believe I need this also. 
-var databaseUrl = "chess";
-var collections = ["e4"];
-var db = mongojs(databaseUrl, collections);
-db.on("error", function (error) {
-    console.log("Database Error:", error);
-});
 
-// Initialize Express
-// var app = express();
+var db = require("../models")
 
 // Let's add some routes here. 
 
 // The homepage should also be the page where we scrape, so that everytime you visit the homepage, more openings are being scraped. 
-router.get("/", function (req, res) {
+router.get("/scrape", function (req, res) {
     // First, we grab the body of the html with axios
     axios.get("http://www.chess.com/openings").then(function (response) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
@@ -30,32 +18,34 @@ router.get("/", function (req, res) {
 
         // Now, we grab every h2 within an article tag, and do the following:
         $(".openings-game-block").each(function (i, element) {
-            // Save an empty result object/ Maybe I'll come back to this. 
-            // var result = {};
 
-            // Add the text and href of every link, and save them as properties of the result object
+            //    Here's the title. Need to find a lower class first. 
             var title = $(element).find(".openings-game-name").text().trim();
             console.log("Here's the name of the opening: " + title)
+            // Need to grab the link as well. It's in the main class, so just an href. 
             var link = $(element).attr("href").trim();
             console.log("Here's the link to the opening: " + link)
+            // Grab the image src also, which I will use later. 
             var image = $(element).find(".openings-image").attr("src").trim();
             console.log("Here's the image URL: " + image)
 
-            db.e4.insert({
+            db.Opening.deleteMany({}, function (err) {
+                if (err) {
+                    console.log(err)
+                } else {
+                    console.log("that worked, everything got dropped first.")
+                }
+            })
+
+            db.Opening.create({
                 "title": title,
                 "link": link,
-                "img": image
+                "image": image
+            }).then(function (data) {
+                res.json(data)
+            }).catch(function (error) {
+                res.json(error)
             })
-            // Create a new opening using the `result` object built from scraping
-            // db.e4.create(result)
-            //     .then(function (dbopenings) {
-            //         // View the added result in the console
-            //         console.log(dbopenings);
-            //     })
-            //     .catch(function (err) {
-            //         // If an error occurred, log it
-            //         console.log(err);
-            //     });
         });
 
         // Send a message to the client
