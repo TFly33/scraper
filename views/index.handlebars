@@ -1,0 +1,53 @@
+{{!-- <div class="card topCard">
+    <div class="card-body text-center">
+        Rick and Morty Character Sort
+    </div>
+</div>
+
+<div class="container card2 centered">
+    <div class="card">
+        <div class="card-body"> CHARACTERS STILL IN THE ROOM </div>
+        <div class="newBurgers">
+            <ol>
+                {{#each openings}}
+                {{#unless devoured}}
+                {{> openings/burger-block devoured=false}}
+                {{/unless}}
+                {{/each}}
+            </ol>
+        </div>
+    </div>
+</div>
+
+<div class="container card3">
+    <div class="card">
+        <div class="card-body"> CHARACTERS YOU KICKED OUT
+            <div class="oldopenings">
+                <ol>
+                    {{#each openings}}
+                    {{#if devoured}}
+                    {{> openings/burger-block devoured=true}}
+                    {{/if}}
+                    {{/each}}
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container card4">
+    <div class="card">
+        <div class="card-body"> <div class="charName">ADD A CHARACTER TO THE CHAOS </div>
+        <br>
+            <form class="create-form">
+
+                <div class="form-group">
+                    <label for="ca">Character Name:</label>
+                    <input type="text" class="burgerName" name="name">
+                </div>
+
+                <button type="submit" class="addBurger btn-success">Add Character</button>
+            </form>
+        </div>
+    </div>
+</div> --}}

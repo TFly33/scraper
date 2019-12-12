@@ -18,7 +18,18 @@ function clearData() {
     })
 }
 // Let's add some routes here. 
+// router.get("/", function (req, res) {
+//     db.Opening.selectAll(function (data) {
+//         // I'm pretty sure this is the object of burgers from MYSQL, which we are turning into an HBS object. 
+//         var hbsObject = {
+//             burgers: data
+//         };
+//         console.log(hbsObject);
+//         // THIS IS GOING TO THE INDEX OF HANDLEBARS 
+//         res.render("index", hbsObject)
+//     })
 
+// })
 // The homepage should also be the page where we scrape, so that everytime you visit the homepage, more openings are being scraped. 
 router.get("/scrape", function (req, res) {
     clearData();
@@ -49,6 +60,8 @@ router.get("/scrape", function (req, res) {
         res.send("Scrape Complete");
     });
 });
+
+
 
 module.exports = router, clearData;
 
