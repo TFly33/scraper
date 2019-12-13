@@ -36,7 +36,7 @@ router.get("/", function (req, res) {
             // If an error occurred, send it to the client
             res.json(err);
         });
-});
+    });
 
 // Let's make the scrape route. I think we want the title, link, image for now.  
 router.get("/scrape", function (req, res) {
@@ -80,6 +80,45 @@ router.delete("/api/openings/:_id", function (req, res) {
     });
 });
 
+router.delete("/api/clear", function (req, res) {
+    console.log("this clear route is workings")
+    db.Opening.remove({}, function (result) {
+        res.send("database cleared")
+    });
+});
+
+router.put("/api/saved/:_id", function (req, res) {
+    console.log("this id saved route is working")
+    db.Opening.update({ _id: req.params._id }, { $set: { saved: true } }, function (result) {
+        res.send("Here is what is saved")
+    });
+});
+
+router.get("/api/saved", function (req, res) {
+    console.log("this saved route is working")
+    db.Opening.find({ saved: true }, function (error, result) {
+        res.json(result)
+    });
+});
+
+// This is my saved handlebars page. I will turn JSON objects into similar images and links to the main page at index.handlebars. 
+
+router.get("/saved", function (req, res) {
+    db.Opening.find({saved:true})
+        .then(function (dbOpening) {
+            // If we were able to successfully find Openings, send them back to the client
+            var hbsObject = {
+                openings: dbOpening
+            };
+            console.log("here is the object being sent to handlebars")
+            console.log(hbsObject);
+            res.render("saved", hbsObject);
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+    });
 // I'm going to also export the clearData function in case I want to use it again later. 
 module.exports = router, clearData;
 

@@ -16,12 +16,14 @@ app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Make public a static folder
+// THIS MEANS PUBLIC DOESNT NEED TO BE IN THE BACKSLASH ROUTE IN MAIN HANDLEBARS
 app.use(express.static("public"));
 
 // Set Handlebars.
 var exphbs = require("express-handlebars");
-
+// This means that handlesbars will use main as it's default layout. 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+// This means that handlebars 
 app.set("view engine", "handlebars");
 
 var routes = require("./controllers/openingsController");
@@ -32,6 +34,6 @@ app.use(routes);
 mongoose.connect("mongodb://localhost/openings", { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Start the server
-app.listen(PORT, function() {
-  console.log("App running on port " + PORT + "!");
+app.listen(PORT, function () {
+    console.log("App running on port " + PORT + "!");
 });

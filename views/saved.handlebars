@@ -1,7 +1,7 @@
 <!-- As a link -->
 <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="#">Chess Openings Scraper</a>
-    <a class="navbar-brand" href="/saved">Saved Openings</a>
+    <a class="navbar-brand" href="#">Saved Openings</a>
 </nav>
 
 <div class="card topCard">
@@ -16,7 +16,9 @@
         <div class="openings">
             <ol>
                 {{#each openings}}
-                {{> openings/openings-block}}
+                {{#if saved}}
+                {{> openings/openings-saved}}
+                {{/if}}
                 {{/each}}
             </ol>
         </div>
