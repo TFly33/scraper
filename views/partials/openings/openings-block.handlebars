@@ -1,0 +1,18 @@
+<li>
+    <p> <b>{{title}} </b></p>
+    <p> <a href="{{link}}"> Play through the Opening</a> </p>
+    <h4>
+        <img src="{{image}}" alt=" openingsImage" height="400" width="400">
+    </h4>
+    {{!-- {{#unless saved}} --}}
+    <button class="changeSaved btn-primary" data-id="{{_id}}" data-saved="{{saved}}">
+        Save
+    </button>
+    <button class="changeSaved btn-secondary" data-id="{{_id}}" data-saved="{{saved}}">
+        Notes
+    </button>
+    <button id= "deleteButton" class="deleteOpening btn-danger" data-id="{{_id}}" data-saved="{{saved}}">
+        Delete
+    </button>
+    {{!-- {{/unless}} --}}
+</li>
