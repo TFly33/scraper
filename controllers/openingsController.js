@@ -23,18 +23,19 @@ function clearData() {
 // Here is the homepage. Let's display all of the openings here. We will create a separate scrape route after this. 
 router.get("/", function (req, res) {
     db.Opening.find({})
-    .then(function(dbOpening) {
-      // If we were able to successfully find Openings, send them back to the client
-    var hbsObject = {
-        openings: dbOpening
-    };
-    console.log("here is the object being sent to handlebars: " + hbsObject);
-      res.render("index",hbsObject);
-    })
-    .catch(function(err) {
-      // If an error occurred, send it to the client
-      res.json(err);
-    });
+        .then(function (dbOpening) {
+            // If we were able to successfully find Openings, send them back to the client
+            var hbsObject = {
+                openings: dbOpening
+            };
+            console.log("here is the object being sent to handlebars")
+            console.log(hbsObject);
+            res.render("index", hbsObject);
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
 });
 
 // Let's make the scrape route. I think we want the title, link, image for now.  
@@ -42,7 +43,7 @@ router.get("/scrape", function (req, res) {
     // **********************I'm going to try to clear the data each time. But I may need to come back to this and make sure this function doesn't screw up my saved paged. *********************
     // **********************
     clearData();
- // **********************
+    // **********************
     axios.get("http://www.chess.com/openings").then(function (response) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
         var $ = cheerio.load(response.data);
@@ -73,15 +74,9 @@ router.get("/scrape", function (req, res) {
 // Let's make a delete route here. We'll call it /api/openings/:id 
 
 router.delete("/api/openings/:_id", function (req, res) {
-    var condition = "_id = " + req.params._id;
     console.log("this delete route is workings")
-    db.Opening.deleteOne(condition, function (result) {
-        if (result.affectedRows == 0) {
-            // If no rows were changed, then the ID must not exist, so 404
-            return res.status(404).end();
-        } else {
-            res.status(200).end();
-        }
+    db.Opening.deleteOne({ _id: req.params._id }, function (result) {
+        res.send("Deleted")
     });
 });
 

@@ -1,26 +1,53 @@
-// Adding the Buttons. Actually gonna start with the delete button since it's typically the easiest since no callback is needed. 
-$("#deleteButton").on("click", function (event) {
-    event.preventDefault();
-    console.log("this button is triggering")
-    var _id = $(this).attr("data-id");
-    if (confirm("are u sure?")) {
-        $.ajax("api/openings/" + _id, {
-            type: 'DELETE',
-            success: function (response) {
-                if (response == 'error') {
-                    console.log('Err!');
+// Adding the Buttons. The delete button is causing me trouble. 
+$(function () {
+    // Scrape button first. 
+    $(function () {
+        // Scrape button first. 
+        $(".scrapeOpenings").on("click", function (event) {
+            event.preventDefault();
+            alert("scrape successful!")
+            console.log("scrape button is triggering")
+            $.ajax("/scrape", {
+                type: 'GET',
+                success: function (response) {
+                    if (response == 'error') {
+                        console.log('Err!');
+                    }
+                    else {
+                        console.log("scraping all those dope openings.");
+                        location.reload();
+                    }
                 }
-                else {
-                    alert('Success');
-                    console.log("Just deleted that lame opening")
-                    location.reload();
-                }
+            });
+        });
+
+        $(".deleteOpening").on("click", function (event) {
+            event.preventDefault();
+            console.log("delete button is triggering")
+            var _id = $(this).attr("data-id");
+            if (confirm("You positive? That opening is dope.")) {
+                $.ajax("api/openings/" + _id, {
+                    type: 'DELETE',
+                    success: function (response) {
+                        if (response == 'error') {
+                            console.log('Err!');
+                        }
+                        else {
+                            alert('Success');
+                            console.log("Just deleted that lame opening")
+                            location.reload();
+                        }
+                    }
+                });
+            } else {
+                alert('Canceled!');
             }
         });
-    } else {
-        alert('Canceled!');
-    }
+
+    });
 });
+
+
 
 // $(function () {
 //     // $(".addBurger").on("click", function (event) {

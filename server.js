@@ -18,15 +18,15 @@ app.use(express.json());
 // Make public a static folder
 app.use(express.static("public"));
 
-var routes = require("./controllers/openingsController");
-
-app.use(routes);
-
 // Set Handlebars.
 var exphbs = require("express-handlebars");
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
+
+var routes = require("./controllers/openingsController");
+
+app.use(routes);
 
 // Connect to the Mongo DB
 mongoose.connect("mongodb://localhost/openings", { useNewUrlParser: true, useUnifiedTopology: true });
