@@ -30,8 +30,12 @@ var routes = require("./controllers/openingsController");
 
 app.use(routes);
 
-// Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/openings", { useNewUrlParser: true, useUnifiedTopology: true });
+// Eventually need to just have one of these.
+
+// Need to add this for mongolab, but can't get the terminal command to work.
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/openings";
+
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Start the server
 app.listen(PORT, function () {
