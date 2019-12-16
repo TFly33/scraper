@@ -1,0 +1,31 @@
+.topRight {
+    background: #769656;
+    padding:10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.topLeft {
+    background: #769656;
+    padding:10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.col {
+    margin:10px;
+}
+.btn-info
+{
+    width:100px;
+    height:50px;
+}
+.clearOpenings 
+{
+    width:100px;
+    height:50px;
+}
+
+body {
+background: #769656
+}

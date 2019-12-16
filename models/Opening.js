@@ -26,13 +26,6 @@ var OpeningSchema = new Schema({
         type: Boolean,
         require: true
     },
-    // The ref property links the ObjectId to the Note model
-    // This allows us to populate the Article with an associated Note
-    note: {
-        type: Schema.Types.ObjectId,
-        ref: "Note"
-    }
-    // GOING TO ADD AN IMAGE HERE BUT WANT TO GET IT WORKING FIRST
 });
 
 // This creates our model from the above schema, using mongoose's model method

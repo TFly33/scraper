@@ -1,4 +1,4 @@
-// Adding the Buttons. The delete button is causing me trouble. 
+// Adding the Buttons. 
 // Scrape button first. 
 $(function () {
     // Scrape button first. 
@@ -64,7 +64,7 @@ $(function () {
             alert('Canceled!');
         }
     });
-
+    // save button.
     $(".saveButton").on("click", function (event) {
         event.preventDefault();
         console.log("save button is triggering")
@@ -78,6 +78,29 @@ $(function () {
                 }
                 else {
                     console.log("Just saved that dope opening")
+                    location.reload();
+                }
+            }
+        });
+    });
+
+    // now the notes button.
+    $(".saveChanges").on("click", function (event) {
+        event.preventDefault();
+        console.log("save changes button is triggering")
+        // this means "use this button's data-id"
+        var _id = $(this).attr("data-id");
+        var note = $(".grabText").text();
+        console.log(note)
+        $.ajax("api/submit/" + _id, {
+            type: "POST",
+            note: note,
+            success: function (response) {
+                if (response == 'error') {
+                    console.log('Err!');
+                }
+                else {
+                    console.log("added that note.")
                     location.reload();
                 }
             }

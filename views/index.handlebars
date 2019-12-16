@@ -1,18 +1,20 @@
 <!-- As a link -->
 <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand" href="#">Chess Openings Scraper</a>
-    <a class="navbar-brand" href="/saved">Saved Openings</a>
+    <a class="navbar-brand topLeft text-light" href="/">Chess Openings Scraper</a>
+    <a class="navbar-brand topRight text-light" href="/saved">Saved Openings</a>
 </nav>
-
-<div class="card topCard">
-    <button type="submit" class="scrapeOpenings btn-success">Scrape Openings</button>
-    <button type="submit" class="savedOpenings btn-info">Saved Openings</button>
-    <button type="submit" class="clearOpenings btn-danger">Clear Openings</button>
+<div class="container">
+    <div"row">
+        <div class="col text-center">
+            <button type="submit" class="scrapeOpenings btn-info">Scrape Openings</button>
+            <button type="submit" class="clearOpenings btn-danger">Clear Openings</button>
+        </div>
+    </div>
 </div>
 
 <div class="container card2 centered">
     <div class="card">
-        <div class="card-body"> Openings</div>
+        <div class="card-body text center">Openings</div>
         <div class="openings">
             <ol>
                 {{#each openings}}

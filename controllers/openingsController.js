@@ -36,7 +36,7 @@ router.get("/", function (req, res) {
             // If an error occurred, send it to the client
             res.json(err);
         });
-    });
+});
 
 // Let's make the scrape route. I think we want the title, link, image for now.  
 router.get("/scrape", function (req, res) {
@@ -104,7 +104,7 @@ router.get("/api/saved", function (req, res) {
 // This is my saved handlebars page. I will turn JSON objects into similar images and links to the main page at index.handlebars. 
 
 router.get("/saved", function (req, res) {
-    db.Opening.find({saved:true})
+    db.Opening.find({ saved: true })
         .then(function (dbOpening) {
             // If we were able to successfully find Openings, send them back to the client
             var hbsObject = {
@@ -118,7 +118,36 @@ router.get("/saved", function (req, res) {
             // If an error occurred, send it to the client
             res.json(err);
         });
+});
+
+// Route for saving a new Note to the db and associating it with an opening. 
+router.post("/api/submit/:_id", function (req, res) {
+    // Create a new Note in the db. Req.body can get me the actual content of the submission. 
+    db.Note.create({ _id: req.params._id }, { $set: { body: req.body } }, function (error, result) {
+        res.json(result)
+        console.log(result);
+        console.log(req.body);
     });
+});
+
+router.get("/api/submit/:_id", function (req, res) {
+    // Create a new Note in the db. Req.body can get me the actual content of the submission. 
+    db.Note.find({ _id: req.params._id })
+        .then(function (dbNote) {
+            // If we were able to successfully find Openings, send them back to the client
+            var notesObject = {
+                notes: dbNote
+            };
+            console.log("here is the note being sent to handlebars");
+            console.log(notesObject);
+            res.render(notesObject);
+        })
+        .catch(function (err) {
+            // If an error occurred, send it to the client
+            res.json(err);
+        });
+});
+
 // I'm going to also export the clearData function in case I want to use it again later. 
 module.exports = router, clearData;
 
